@@ -1,0 +1,102 @@
+<div class="containerKishan color-dark">
+  <div class="col">
+    <h3>Tasks</h3> 
+  </div>
+  <div class="col" *ngIf="(selectedTask.taskTitle !='')">
+        <h3 (click)="editSelectedTask()"> Selected Task Details</h3> 
+    </div>
+</div>
+
+<div class="containerKishan color-light">
+
+  <div class="col">
+      <div class="row">
+        <p class="sm">Add New Task</p>
+        <form>
+          <input type="text" class="txt" name="item" placeholder="New Task..." [(ngModel)]="newTaskTitle">
+          <input type="submit" class="btn" value="Add New Task" (click)="addTask()">
+        </form>  
+     </div>
+     <h2 class="sm">Task List <span class="badge badge-primary">{{taskCount}}</span></h2>
+     <div class="row life-container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">Task Title</th>
+                  <th scope="col">Task Status</th>
+                  <th scope="col">Last Update</th>
+                </tr>
+              </thead>
+            <tr class="table-default"  *ngFor="let task of myTasks; let i = index" (click)="showTask(i)">
+              <td>{{ task.taskTitle }}</td>
+              <td>{{ stringifyTaskStatus(task.taskStatus) }}</td>
+              <td>{{task.lastUpdate }}</td>
+            </tr>
+
+          </table>
+     </div>
+
+  </div>
+
+    <div class="col">
+          <!-- <h2>{{ selectedTask.taskTitle}}</h2> -->
+
+          <div class="col">
+            <table class="table table-hover" *ngIf="(selectedTask.taskTitle !='')" (click)="editSelectedTask()">
+              <tr>
+                <td width=30%><strong>Task Title</strong></td>
+                <td>{{ selectedTask.taskTitle}}</td>
+              </tr>
+              <tr>
+                  <td><strong>Task Desc</strong></td>
+                  <td>{{ selectedTask.taskDesc}}</td>
+                </tr>
+               
+                <!-- Select Feature  -->
+                <tr  *ngIf="!editSelectTask">
+                    <td><strong>Task Status</strong>
+                    </td>
+                    <td (click)="editSelectedTask()">
+                      {{stringifyTaskStatus(selectedTask.taskStatus)}}
+
+                    </td>
+                    
+                </tr>
+
+                <!-- Edit Feature  -->
+                <tr  *ngIf="editSelectTask" >
+                    <td><strong>Task Status</strong></td>
+                    <td>
+                        <select class="form-group" id="sel1" [(ngModel)]="editableTask.taskStatus">
+                            <option value="0">{{stringifyTaskStatus(0)}}</option>
+                            <option value="1">{{stringifyTaskStatus(1)}}</option>
+                            <option value="2">{{stringifyTaskStatus(2)}}</option>
+                            <option value="3">{{stringifyTaskStatus(3)}}</option>
+                          </select>
+                    </td>
+
+                  </tr>
+
+                  <tr>
+                      <td><strong>Last Updated on</strong></td>
+                      <td>{{selectedTask.lastUpdate}}</td>
+                    </tr>
+
+                    <tr>
+                    </tr>
+
+            </table>
+
+
+            <div class="row" *ngIf="(selectedTask.taskTitle !='') && editSelectTask">
+                <div class="col-sm-5">
+                    <input type="button" class="btn" value="Update" (click)="editTask()">
+                    <input type="button" class="btn" value="Cancel" (click)="cancelEdit()">
+                </div>
+
+            </div>
+
+          </div>
+       
+    </div>
+</div>
