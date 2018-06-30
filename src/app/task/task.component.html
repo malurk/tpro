@@ -13,7 +13,9 @@
       <div class="row">
         <p class="sm">Add New Task</p>
         <form>
-          <input type="text" class="txt" name="item" placeholder="New Task..." [(ngModel)]="newTaskTitle">
+          <input type="text" class="txt" name="item" placeholder="Add new task" [(ngModel)]="newTaskTitle">
+          <textarea class="txt bhay" rows ="3" name="taskDescription" placeholder="Add Optional Description" [(ngModel)]="newTaskDesc"></textarea>
+
           <input type="submit" class="btn" value="Add New Task" (click)="addTask()">
         </form>  
      </div>
@@ -48,7 +50,7 @@
                 <td>{{ selectedTask.taskTitle}}</td>
               </tr>
               <tr>
-                  <td><strong>Task Desc</strong></td>
+                  <td><strong>Task Description</strong></td>
                   <td>{{ selectedTask.taskDesc}}</td>
                 </tr>
                
@@ -87,16 +89,26 @@
 
             </table>
 
-
-            <div class="row" *ngIf="(selectedTask.taskTitle !='') && editSelectTask">
+            <div *ngIf="(selectedTask.taskTitle !='') && editSelectTask">
                 <div class="col-sm-5">
                     <input type="button" class="btn" value="Update" (click)="editTask()">
                     <input type="button" class="btn" value="Cancel" (click)="cancelEdit()">
                 </div>
-
             </div>
+            <div class="col" *ngIf="(selectedTask.taskTitle !='')">
+              <h3>Activity on the Task</h3>
+              <ul>
+                <li class="accor" *ngFor="let act of selectedTask.taskActivity.reverse()">
+                  <a href="{{selectedTask.taskId}}">{{ act.touchMessage}}</a>
+                  <p >{{ act.timestamp}}</p>
+                </li>
+              </ul>
+            </div>
+                      
 
           </div>
+
        
     </div>
 </div>
+

@@ -92,9 +92,14 @@ export class TaskComponent implements OnInit {
           touchMessage : "Task Created",
           stamp : ActivityStamp.TASK_CREATE
       }
+
+      if (this.newTaskDesc == ""){
+          this.newTaskDesc = this.dummyDesc;
+      }
+
       const newTask : Task = {
         taskTitle : this.newTaskTitle,
-        taskDesc: this.dummyDesc,
+        taskDesc: this.newTaskDesc,
         taskStatus: TaskStatus.OPEN,
         taskActivity : [tStamp]
       }
@@ -102,6 +107,7 @@ export class TaskComponent implements OnInit {
       this.myTasks.push(newTask);
       this.taskCount = this.myTasks.length;
       this.newTaskTitle = ""
+      this.newTaskDesc = ""
     
     }
   }
@@ -113,7 +119,9 @@ export class TaskComponent implements OnInit {
         let ind = this.myTasks.findIndex(tsk => tsk.taskTitle == this.selectedTask.taskTitle);
         const tStamp : TouchStamp = {
           timestamp: new Date(),
-          touchMessage : "Status Changed",
+          touchMessage : "Status Changed from `" + this.stringifyTaskStatus(this.selectedTask.taskStatus) +  
+                                    "' to `" +
+                                    this.stringifyTaskStatus(this.editableTask.taskStatus) + "'",
           stamp : ActivityStamp.TASK_STATUS_CHANGE
         }
 
